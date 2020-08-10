@@ -1,3 +1,6 @@
+"""
+抽象类构建
+"""
 import abc
 
 class Tombola(abc.ABC):
