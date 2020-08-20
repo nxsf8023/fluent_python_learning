@@ -4,6 +4,7 @@ import math
 import numbers
 import functools
 import operator
+import itertools
 
 
 class Vector:
@@ -28,8 +29,21 @@ class Vector:
                 bytes(self._components))
 
     def __eq__(self, other):
-        return len(self) == len(other) and all(a == b for a, b in zip(self, other))
+        if isinstance(self, other):
+            return len(self) == len(other) and all(a == b for a, b in zip(self, other))
+        else:
+            return NotImplemented
         # return tuple(self) == tuple(other)
+
+    def __add__(self, other):
+        try:
+            pairs = itertools.zip_longest(self, other, fillvalue=0.0)
+            return Vector(a + b for a, b in pairs)
+        except TypeError:
+            return NotImplemented
+
+    def __radd__(self, other):
+        return self + other
 
     def __hash__(self):
         hashes = (hash(x) for x in self._components)
@@ -70,3 +84,13 @@ class Vector:
         typecode = chr(octets[0])
         memv = memoryview(octets[1:]).cast(typecode)
         return cls(memv)
+
+
+if __name__ == "__main__":
+    v1 = Vector([3, 4, 5])
+    v2 = Vector([1, 2])
+    # print(v1 + v2)
+
+    # print((3, 4) + v1)
+
+    print(v1 + 1)
