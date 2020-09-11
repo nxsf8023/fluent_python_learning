@@ -16,4 +16,4 @@ class Sentence:
     def __iter__(self):
         for word in self.words:
             yield word
-        return 
+        return
