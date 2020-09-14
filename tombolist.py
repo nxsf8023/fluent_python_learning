@@ -20,4 +20,3 @@ class TomboList(list):
     def inspect(self):
         return tuple(sorted(self))
 
-    
